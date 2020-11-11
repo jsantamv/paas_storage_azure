@@ -26,12 +26,11 @@ Creo un proyecto con los comandos de dotnet
 dotnet new console -n Blob.Console.Test
 ```
 me dirijo a la carpeta creada y agrego un archivo de configuracion para almacenar mi connstring y lo agrego al archivo csproj. 
-y agrego los siguientes paquetes nugets
-```p
-Install-Package Microsoft.Extensions.Configuration -Version 5.0.0
-```
+y agrego los siguientes paquetes nugets:
 
-
+- Microsoft.Extensions.Configuration
+- Microsoft.Extensions.Configuration.FileExtensions
+- Microsoft.Extensions.Configuration.Json
 
 ## Documentación
 - https://docs.microsoft.com/es-es/azure/storage/
