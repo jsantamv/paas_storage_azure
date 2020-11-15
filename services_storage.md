@@ -34,7 +34,7 @@ y agrego los siguientes paquetes nugets:
 - Microsoft.Extensions.Configuration
 - Microsoft.Extensions.Configuration.FileExtensions
 - Microsoft.Extensions.Configuration.Json
-- Microsoft.Azure.Storage.Blob: Esta version esta desactualizada pero para el ejercicio es mas que suficiente. shorturl.at/rzMX0
+- Microsoft.Azure.Storage.Blob: Esta version esta desactualizada pero para el ejercicio es mas que suficiente. https://shorturl.at/rzMX0
 
 ## Documentación
 - **Azure Storage**: https://docs.microsoft.com/es-es/azure/storage/
