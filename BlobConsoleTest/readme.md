@@ -25,9 +25,11 @@ setx AZURE_STORAGE_CONNECTION_STRING "<yourconnectionstring>"
  ```b
  export AZURE_STORAGE_CONNECTION_STRING="<yourconnectionstring>"
 ```
+El siguiente diagrama muestra la relación entre estos recursos
+
+![alt text](https://docs.microsoft.com/en-us/azure/storage/blobs/media/storage-blobs-introduction/blob1.png)
 
 Use the following .NET classes to interact with these resources:
-![alt text](https://docs.microsoft.com/en-us/azure/storage/blobs/media/storage-blobs-introduction/blob1.png)
 
 *BlobServiceClient*: The BlobServiceClient class allows you to manipulate Azure Storage resources and blob containers.
 *BlobContainerClient*: The BlobContainerClient class allows you to manipulate Azure Storage containers and their blobs.
