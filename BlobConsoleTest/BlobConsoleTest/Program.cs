@@ -1,10 +1,8 @@
 ﻿using System;
 using System.IO;
-
-using Azure;
-using Azure.Storage;
-using Azure.Storage.Blobs;
-
+using Microsoft.Azure;
+using Microsoft.Azure.Storage;
+using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.FileExtensions;
 using Microsoft.Extensions.Configuration.Json;
@@ -26,13 +24,30 @@ namespace BlobConsoleTest
                     .AddJsonFile("appsettings.json", true, true)
                     .Build();
 
+            CloudStorageAccount storagaeAcount = CloudStorageAccount.Parse(config["connectionstring"]);
+            
+            CloudBlobClient clientBlob = storagaeAcount.CreateCloudBlobClient();
+            
+            CloudBlobContainer container = clientBlob.GetContainerReference("testplatzi");
+            container.CreateIfNotExists();
+            
+            //Permiso de accesso publico
+            container.SetPermissions(new BlobContainerPermissions{
+                PublicAccess = BlobContainerPublicAccessType.Blob
+            });
 
-            CloudStorageAccount(account_name = None, account_key = None, sas_token = None, is_emulated = None, endpoint_suffix = None)
+            //Subir una imagen
+            CloudBlockBlob myBlob = container.GetBlockBlobReference("frijol.jpg");
+            
+            using(var fileStream = System.IO.File.OpenRead(@"F:\Proyecto Familiar\Chococafe\frijol.jpg"))
+            {
+                myBlob.UploadFromStream(fileStream);
+            }
+            
+            Console.WriteLine("Archivo subido");
+            Console.WriteLine(container.StorageUri);
+            Console.ReadKey();
 
-            string getConnString = config["connectionstring"];
-
-            Console.WriteLine(getConnString);
-            //Console.ReadKey();
         }
     }
 }
