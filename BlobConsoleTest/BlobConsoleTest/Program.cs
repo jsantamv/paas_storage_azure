@@ -1,14 +1,5 @@
 ﻿using System;
 using System.IO;
-using Microsoft.Azure;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.FileExtensions;
-using Microsoft.Extensions.Configuration.Json;
-
-
-
 
 namespace BlobConsoleTest
 {
@@ -16,38 +7,25 @@ namespace BlobConsoleTest
     {
         static void Main(string[] args)
         {
-            var builder = new ConfigurationBuilder()
-                               .SetBasePath(Directory.GetCurrentDirectory())
-                               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-            IConfiguration config = new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json", true, true)
-                    .Build();
+            //Version del curso de platzi
+            var myContainer = new BlobMicrosoftAzureContainer();
+            Console.WriteLine("Indicar La ruta del Archivo");
+            myContainer.PathName = Console.ReadLine();
+            FileInfo fi = new FileInfo(myContainer.PathName);
+            myContainer.BlobName = fi.Name;
 
-            CloudStorageAccount storagaeAcount = CloudStorageAccount.Parse(config["connectionstring"]);
-            
-            CloudBlobClient clientBlob = storagaeAcount.CreateCloudBlobClient();
-            
-            CloudBlobContainer container = clientBlob.GetContainerReference("testplatzi");
-            container.CreateIfNotExists();
-            
-            //Permiso de accesso publico
-            container.SetPermissions(new BlobContainerPermissions{
-                PublicAccess = BlobContainerPublicAccessType.Blob
-            });
-
-            //Subir una imagen
-            CloudBlockBlob myBlob = container.GetBlockBlobReference("frijol.jpg");
-            
-            using(var fileStream = System.IO.File.OpenRead(@"F:\Proyecto Familiar\Chococafe\frijol.jpg"))
+            if (File.Exists(myContainer.PathName))
             {
-                myBlob.UploadFromStream(fileStream);
+                // This path is a file
+                myContainer.UploadImage();
             }
-            
-            Console.WriteLine("Archivo subido");
-            Console.WriteLine(container.StorageUri);
-            Console.ReadKey();
+            else
+            {
+                Console.WriteLine("{0} is not a valid file or directory.", myContainer.PathName);
+            }
 
+            Console.ReadLine();
         }
     }
 }

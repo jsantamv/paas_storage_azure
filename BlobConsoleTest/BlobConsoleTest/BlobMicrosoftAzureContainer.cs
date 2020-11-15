@@ -23,46 +23,70 @@ namespace BlobConsoleTest
         /// un contanedor por default.
         /// </summary>
         public string DefaultContainer { get; set; }
+
+        /// <summary>
+        /// Indica el nombre de archivo subido
+        /// </summary>
+        public string BlobName { get; set; }
+
+        /// <summary>
+        /// Ruta del archivo al que hay que subir
+        /// </summary>
+        public string PathName { get; set; }
+
         public BlobMicrosoftAzureContainer()
-        {            
+        {
             DefaultContainer = "default";
+            BlobName = string.Empty;
         }
 
-
-        public void SubirImagen()
+        /// <summary>
+        /// Forma con Microsoft Azure Blob.
+        /// </summary>
+        public void UploadImage()
         {
-            var builder = new ConfigurationBuilder()
-                             .SetBasePath(Directory.GetCurrentDirectory())
-                             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
-            IConfiguration config = new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json", true, true)
-                    .Build();
-
-            CloudStorageAccount storagaeAcount = CloudStorageAccount.Parse(config["connectionstring"]);
-
-            CloudBlobClient clientBlob = storagaeAcount.CreateCloudBlobClient();
-
-            CloudBlobContainer container = clientBlob.GetContainerReference(DefaultContainer);
-            container.CreateIfNotExists();
-
-            //Permiso de accesso publico
-            container.SetPermissions(new BlobContainerPermissions
+            try
             {
-                PublicAccess = BlobContainerPublicAccessType.Blob
-            });
+                if (BlobName.Equals(string.Empty))
+                    throw new Exception("El valor BlobName Referencia no puede ser vacio");
 
-            //Subir una imagen
-            CloudBlockBlob myBlob = container.GetBlockBlobReference("frijol.jpg");
+                _ = new ConfigurationBuilder()
+                                 .SetBasePath(Directory.GetCurrentDirectory())
+                                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-            using (var fileStream = System.IO.File.OpenRead(@"F:\Proyecto Familiar\Chococafe\frijol.jpg"))
-            {
-                myBlob.UploadFromStream(fileStream);
+                IConfiguration config = new ConfigurationBuilder()
+                        .AddJsonFile("appsettings.json", true, true)
+                        .Build();
+
+                CloudStorageAccount storagaeAcount = CloudStorageAccount.Parse(config["connectionstring"]);
+
+                CloudBlobClient clientBlob = storagaeAcount.CreateCloudBlobClient();
+
+                CloudBlobContainer container = clientBlob.GetContainerReference(DefaultContainer);
+                container.CreateIfNotExists();
+
+                //Permiso de accesso publico
+                container.SetPermissions(new BlobContainerPermissions
+                {
+                    PublicAccess = BlobContainerPublicAccessType.Blob
+                });
+
+                //Subir una imagen
+                CloudBlockBlob myBlob = container.GetBlockBlobReference(BlobName);
+
+                using (var fileStream = File.OpenRead(PathName))
+                {
+                    myBlob.UploadFromStream(fileStream);
+                }
+
+                Console.WriteLine("Archivo subido");
+                Console.WriteLine(container.StorageUri);
+                Console.ReadKey();
             }
-
-            Console.WriteLine("Archivo subido");
-            Console.WriteLine(container.StorageUri);
-            Console.ReadKey();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
 
