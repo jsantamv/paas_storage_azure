@@ -5,7 +5,6 @@ Para esta clase vamos utilizar las siguientes Librerias.
 
 ```b
 {
-  "connectionstring": "DefaultEndpointsProtocol=https;AccountName=sttestingstorage;AccountKey=N/X1bpavjr1tDWPiOgDCZGbUdKq0GcxuJf+jY+58q2TjfX+oFW8FvdC7HOLBKGwrlY1Edo83i9tqHkFHnFTRDA==;EndpointSuffix=core.windows.net",
-  "connectionstring1": "DefaultEndpointsProtocol=https;AccountName=sttestingstorage;AccountKey=N/X1bpavjr1tDWPiOgDCZGbUdKq0GcxuJf+jY+58q2TjfX+oFW8FvdC7HOLBKGwrlY1Edo83i9tqHkFHnFTRDA==;EndpointSuffix=core.windows.net"
+  "connectionstring": "ver su cuenta de azure",  
 }
 ```
