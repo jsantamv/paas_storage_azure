@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.Documents;
+using CosmosTableConsole.Entity;
 
 namespace CosmosTableConsole
 {
@@ -88,6 +89,9 @@ namespace CosmosTableConsole
             Console.WriteLine();
             return table;
         }
+
+       
+
 
     }
 }

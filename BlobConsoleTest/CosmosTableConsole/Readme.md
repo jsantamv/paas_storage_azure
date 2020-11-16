@@ -7,4 +7,5 @@ Para configurar puede ir a la documentación de Microsoft en el siguiente link
 Una nota para hacer referencia es importante indices para busqueda tambien llamados como llaves
 - PartitionKey
 - RowKey
+
 [Documentación](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.cosmos.table.tableentity?view=azure-dotnet)

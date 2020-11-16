@@ -12,40 +12,58 @@ namespace CosmosTableConsole
     {
         static void Main(string[] args)
         {
-            var res = Common.CreateTableAsync("Tabla2");
-            var res2 = Common.CreateTable("Table3");
-
-            Console.WriteLine($"Ejecutado Correctamente {res.Status} or {res2.Name}");
-
+            CrearContacto();
         }
 
-        public static async Task<CloudTable> CreateTableAsyc(string tableName, string conectionStrig)
+        /// <summary>
+        /// Crea o Actualiza una Tabla con los datos
+        /// que se solicitan al cliente
+        /// </summary>
+        private static void CrearContacto()
         {
-            try
-            {
-                // Nos Conectamos
-                CloudStorageAccount storageAccount = CloudStorageAccount.Parse(conectionStrig);
+            Console.WriteLine("Incia la Creacion de Contacto");
+            
+            //Instacias para el contacto 
+            Contacto crearContact = new Contacto();
+            Entity.Contacto contacto = new Entity.Contacto();
 
-                // Este Cliente esteblece la conexion de storage a mi cosmos.
-                CloudTableClient tableClient = storageAccount.CreateCloudTableClient(new TableClientConfiguration());
+            Console.WriteLine("Digite la Tabla");
+            var table = Common.CreateTable(Console.ReadLine().ToLower());
 
-                //ya Tengo mi tabla que exista segun la configuracion anterior
-                CloudTable table = tableClient.GetTableReference(tableName);
+            Console.WriteLine("Digite Apellido");
+            contacto.Apellido = Console.ReadLine();
 
-                if (await table.CreateIfNotExistsAsync())
-                    Console.WriteLine($"Tabla Creada {tableName}");
-                else
-                    Console.WriteLine($"La tabla ya existe {tableName}");
+            Console.WriteLine("Digite Email");
+            contacto.Email = Console.ReadLine();
 
-                return table;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return null;
-            }
-         
+            Console.WriteLine("Digite Nombre");
+            contacto.Nombre = Console.ReadLine();           
+
+            Console.WriteLine("Digite Telefono");
+            contacto.Telefono = Console.ReadLine();
+
+            contacto.PartitionKey = contacto.Apellido;
+            contacto.RowKey = contacto.Nombre;
+
+            var result = crearContact.InsertOperation(table,contacto);
+
+            Console.WriteLine($"Finaliza la corrida se crea o actualiza {result.Apellido}");
+
         }
 
+        private static void CrearContactoAsync()
+        {
+            Console.WriteLine("Incia la Creacion de Contacto");
+            string storageConnectionString = AppSettings.LoadAppSettings().StorageConnectionString;
+            CloudStorageAccount storageAccount = Common.CreateStorageAccountFromConnectionString(storageConnectionString);
+            CloudTableClient tableClient = storageAccount.CreateCloudTableClient(new TableClientConfiguration());
+            CloudTable table = tableClient.GetTableReference("Tabla2");
+
+            Contacto contact = new Contacto();
+            var correr = Task.Factory.StartNew(async () => contact.InsertOperationAsync(table));
+            correr.Wait();
+
+            Console.WriteLine("Finaliza la corrida Asyncrona");
+        }
     }
 }
