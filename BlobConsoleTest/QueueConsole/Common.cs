@@ -42,7 +42,7 @@ namespace QueueConsole
             // Retrieve storage account information from connection string.
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(consstr);
 
-            // Cliente de generador de colas
+            // Cliente de generador de colas obtener las referencias de tus Queues
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
 
             CloudQueue queue = queueClient.GetQueueReference("filaprocesos");

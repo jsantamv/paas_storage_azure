@@ -70,7 +70,7 @@ namespace CosmosTableConsole
             // Retrieve storage account information from connection string.
             CloudStorageAccount storageAccount = CreateStorageAccountFromConnectionString(storageConnectionString);
 
-            // Create a table client for interacting with the table service
+            // Create a table client for interacting with the table service permite acceso a las Tablas de Almacenamiento
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient(new TableClientConfiguration());
 
             Console.WriteLine("Create a Table for the demo");
