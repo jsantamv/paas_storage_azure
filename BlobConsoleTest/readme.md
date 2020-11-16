@@ -32,10 +32,10 @@ El siguiente diagrama muestra la relación entre estos recursos
 
 Use the following .NET classes to interact with these resources:
 
-*BlobServiceClient*: The BlobServiceClient class allows you to manipulate Azure Storage resources and blob containers.
-*BlobContainerClient*: The BlobContainerClient class allows you to manipulate Azure Storage containers and their blobs.
-*BlobClient*: The BlobClient class allows you to manipulate Azure Storage blobs.
-*BlobDownloadInfo*: The BlobDownloadInfo class represents the properties and content returned from downloading a blob.
+- *BlobServiceClient*: The BlobServiceClient class allows you to manipulate Azure Storage resources and blob containers.
+- *BlobContainerClient*: The BlobContainerClient class allows you to manipulate Azure Storage containers and their blobs.
+- *BlobClient*: The BlobClient class allows you to manipulate Azure Storage blobs.
+- *BlobDownloadInfo*: The BlobDownloadInfo class represents the properties and content returned from downloading a blob.
 
 ## Documentacion
 
